@@ -1,0 +1,11 @@
+.app {
+    background-color: white;
+    color: black;
+    transition: all 0.5s ease;
+}
+
+
+.dark-mode {
+    background-color: rgb(4, 4, 77);
+    color: rgb(150, 201, 201);
+}
