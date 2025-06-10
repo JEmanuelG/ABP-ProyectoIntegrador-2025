@@ -1,5 +1,5 @@
 
-<h2 align="center"><strong>EABP Proyecto Integrador</strong></h2>
+<h2 align="center"><strong>ABP Proyecto Integrador</strong></h2>
 <h2 align="center">Procesamiento de datos con APIS REST</h2>
 
 <div id="top"></div>
