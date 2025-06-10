@@ -2,14 +2,18 @@ import './App.css';
 import Card from './components/Card.jsx';
 import Stats from './components/Stats.jsx';
 import axios from "axios";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 
 function App() {
-  
+  // ESTADOS
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState('');
   const [show, setShow] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
+
+  // REFERENCIAS
+  const containerRef = useRef(null);
 
   
   useEffect(()=>{
@@ -29,13 +33,24 @@ function App() {
   // CALCULA EL PRODUCTO CON EL PRECIO MAS BAJO (MIN)
   const minProduct = Math.min(...filteredProducts.map((p)=>p.price));
 
+  //  FUNCION AXILIAR PARA EL MODO OSCURO
+  const toggleDarkMode = ()=>{
+    setDarkMode(!darkMode);
+    containerRef.current.classList.toggle("dark-mode")
+
+  };
+
   return (
-    <>
-      <h1>SEGUNDA EVIDENCIA</h1>
-
-
-      <input type='text' placeholder='Buscar producto' value={search} 
+    <div ref={containerRef}>
+      <h1><strong>ABP Proyecto Integrador</strong></h1>
+      <div>
+        <button onClick={toggleDarkMode}>Modo {darkMode ? "Claro" : "Oscuro"}</button>
+      </div>
+      
+      <div>
+        <input type='text' placeholder='Buscar producto' value={search} 
       onChange={(e)=>{setSearch(e.target.value)}} />
+      </div>
 
       <div style={{ backgroundColor: 'lightblue' }}>
         <ul>
@@ -49,7 +64,7 @@ function App() {
         </ul>
       </div>
       
-      <div style={{ backgroundColor: 'lightgreen' }}>
+      <div>
         <button style={{ backgroundColor: 'green' }} onClick={()=> setShow(!show)}> Ocultar </button>
 
         {show && <Stats total={totalProducts} max={maxProduct} min={minProduct} />}
@@ -60,7 +75,7 @@ function App() {
 
   
     
-    </>
+    </div>
   );
 }
 
