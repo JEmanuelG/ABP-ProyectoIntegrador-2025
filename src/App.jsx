@@ -12,10 +12,12 @@ function App() {
   const [show, setShow] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [page, setPage] = useState(1);
+  const [format, setFormat] = useState("")
 
   // REFERENCIAS
   const containerRef = useRef(null);
 
+  // DEFINE EL LIMITE DE LA CANTIDAD DE PRODUCTOS QUE SE VAN A LLAMAR DE LA API
   const limit = 4;
   
   useEffect(()=>{
@@ -39,8 +41,31 @@ function App() {
   const toggleDarkMode = ()=>{
     setDarkMode(!darkMode);
     containerRef.current.classList.toggle("dark-mode")
-
   };
+
+  // DESCARGA DE REGISTROS
+  const handleExport = ()=>{
+    const blob = new Blob([JSON.stringify(filteredProducts, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    triggerDownload(url,"productos.json");
+  };
+
+  const triggerDownload = (url, filename) => {
+    // DEFINICION DE HIOPERVINCULO
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    // AGREGAMOS HIPERVINCULO AL DOM
+    document.body.appendChild(link);
+    // SIMULACION DE CLICK
+    link.click();
+    // ELIMINAR EL ELEMENTO
+    document.body.removeChild(link);
+  };
+
+  
 
   return (
     <div ref={containerRef}>
@@ -53,6 +78,14 @@ function App() {
         <input type="text" style={{ backgroundColor: 'white' }} placeholder="Buscar producto" value={search} 
       onChange={(e)=>{setSearch(e.target.value)}} />
       </div>
+
+      <select onChange={(e) => setFormat(e.target.value)} value={format}>
+        <option value="">Seleccionar formato</option>
+        <option value="json">JSON</option>
+      </select>
+
+      <button onClick={handleExport}> Exportar archivo </button>
+
 
       <div>
         <ul>
