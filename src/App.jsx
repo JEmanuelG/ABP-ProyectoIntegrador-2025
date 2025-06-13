@@ -1,6 +1,6 @@
 import './App.css';
-import Card from './components/Card.jsx';
-import Stats from './components/Stats.jsx';
+import Card from './components/ProductList.jsx';
+import Stats from './components/StatsPanel.jsx';
 import axios from "axios";
 import { useEffect, useState, useRef } from 'react';
 
@@ -48,11 +48,11 @@ function App() {
       </div>
       
       <div>
-        <input type='text' placeholder='Buscar producto' value={search} 
+        <input type="text" style={{ backgroundColor: 'white' }} placeholder="Buscar producto" value={search} 
       onChange={(e)=>{setSearch(e.target.value)}} />
       </div>
 
-      <div style={{ backgroundColor: 'lightblue' }}>
+      <div>
         <ul>
           {filteredProducts.map((p)=> (
             <li key={p.id}>
@@ -65,7 +65,7 @@ function App() {
       </div>
       
       <div>
-        <button style={{ backgroundColor: 'green' }} onClick={()=> setShow(!show)}> Ocultar </button>
+        <button style={{ backgroundColor: 'green' }} onClick={()=> setShow(!show)}> {show ? "Ocultar" : "Mostrar"} </button>
 
         {show && <Stats total={totalProducts} max={maxProduct} min={minProduct} />}
       
