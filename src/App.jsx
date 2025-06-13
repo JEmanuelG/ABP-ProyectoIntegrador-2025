@@ -11,16 +11,18 @@ function App() {
   const [search, setSearch] = useState('');
   const [show, setShow] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
+  const [page, setPage] = useState(1);
 
   // REFERENCIAS
   const containerRef = useRef(null);
 
+  const limit = 4;
   
   useEffect(()=>{
-    axios.get("https://dummyjson.com/products?limit=100 ").then((res)=>{
+    axios.get(`https://dummyjson.com/products?limit=${limit}&skip=${(page - 1) * limit}`).then((res)=>{
       setProducts(res.data.products)
     });
-  }, []);
+  }, [page]);
 
   // SE FILTRAN PRODUCTOS
   const filteredProducts = products.filter((p)=> p.title.toLowerCase().includes(search.toLowerCase()));
@@ -62,6 +64,11 @@ function App() {
             </li>
           ))}
         </ul>
+
+        <button disabled={page === 1} onClick={()=>{setPage(page - 1)}}>Anterior</button>
+        <b>Página {page}</b>
+        <button onClick={()=>{setPage(page + 1)}}>Siguiente</button>
+
       </div>
       
       <div>
